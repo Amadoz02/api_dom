@@ -1,0 +1,40 @@
+
+create database adso_2894667;
+use adso_2894667;
+
+create table GENEROS(id_genero int auto_increment primary key, nom_genero varchar(20));
+create table CIUDADES(id_ciudad int auto_increment primary key, nom_ciudad varchar(20));
+
+create table USUARIOS(id_user int auto_increment primary key,
+ nombre varchar(30),
+ apellido varchar(30),
+ telefono int(10),
+ documento int unique,
+ usuario varchar(25),
+ contrasena varchar(25),
+ fk_id_genero int,
+ fk_id_ciudad int,
+  foreign key (fk_id_genero) references GENEROS(id_genero),
+  foreign key (fk_id_ciudad) references CIUDADES(id_ciudad))
+;
+create table LENGUAJES (
+id_leng int auto_increment primary key,
+ nom_lenguaje varchar(30));
+ 
+ 
+create table lenguajes_usuarios(
+fk_id_user int,
+ fk_id_leng int, 
+ foreign key (fk_id_user) references USUARIOS(id_user),
+ foreign key (fk_id_leng) references LENGUAJES(id_leng)
+	
+);
+-----------------------------------------
+insert into CIUDADES(nom_ciudad) values ('bucaramanga'),
+('floridablanca'),
+('giron'),
+('piedecuesta'),
+('lebrija');
+
+insert into GENEROS(nom_genero) values ('masculino'),('femenino'),('otros');
+insert into LENGUAJES(nom_lenguaje) values ('java'),('javascrip'),('.net'),('c#'),('php'),('python');

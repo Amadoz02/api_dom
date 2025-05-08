@@ -2,7 +2,7 @@ const db = require('../config/db.js');
 
 exports.getUsuarios = (req, res) => {
     const sql = `
-        SELECT u.id_user, u.nombre, u.apellido, u.correo,
+        SELECT u.id_user, u.nombre, u.apellido, u.telefono,u.documento,u.usuario,u.contrasena,
                g.nom_genero, c.nom_ciudad
         FROM USUARIOS u
         JOIN GENEROS g ON u.fk_id_genero = g.id_genero
@@ -13,32 +13,36 @@ exports.getUsuarios = (req, res) => {
         res.json(results);
     });
 };
-
 exports.createUsuario = (req, res) => {
-    const { nombre, apellido, correo, fk_id_genero, fk_id_ciudad } = req.body;
+    console.log("Contenido de req.body:", req.body); // Diagnóstico
 
-    if (!nombre || !apellido || !correo || !fk_id_genero || !fk_id_ciudad) {
+    const { nombre, apellido, telefono, documento, usuario, contrasena, fk_id_genero, fk_id_ciudad } = req.body;
+
+    if (!nombre || !apellido || !telefono || !documento || !usuario || !contrasena || !fk_id_genero || !fk_id_ciudad) {
         return res.status(400).json({ error: 'Faltan campos requeridos' });
     }
 
-    const sql = 'INSERT INTO USUARIOS(nombre, apellido, correo, fk_id_genero, fk_id_ciudad) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [nombre, apellido, correo, fk_id_genero, fk_id_ciudad], (err, result) => {
+    const sql = 'INSERT INTO USUARIOS(nombre, apellido, telefono, documento, usuario, contrasena, fk_id_genero, fk_id_ciudad) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    
+    db.query(sql, [nombre, apellido, telefono, documento, usuario, contrasena, fk_id_genero, fk_id_ciudad], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Usuario creado', id: result.insertId });
     });
 };
 
 
+
+
 // PUT - actualizar todos los campos del usuario
 exports.updateUsuario = (req, res) => {
     const { id } = req.params;
-    const { nombre, apellido, correo, fk_id_genero, fk_id_ciudad } = req.body;
+    const { nombre, apellido, telefono, documento, usuario, contrasena, fk_id_genero, fk_id_ciudad } = req.body;
     const sql = `
         UPDATE USUARIOS
-        SET nombre = ?, apellido = ?, correo = ?, fk_id_genero = ?, fk_id_ciudad = ?
+        SET nombre = ?, apellido = ?, telefono = ?, documento = ?, usuario = ?, contrasena = ?, fk_id_genero = ?, fk_id_ciudad = ?
         WHERE id_user = ?
     `;
-    db.query(sql, [nombre, apellido, correo, fk_id_genero, fk_id_ciudad, id], (err, result) => {
+    db.query(sql, [nombre, apellido, telefono, documento, usuario, contrasena, fk_id_genero, fk_id_ciudad, id], (err, result) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: 'Usuario actualizado', result });
     });
