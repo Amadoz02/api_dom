@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/ciudadesController.js');
+import { Router } from 'express';
+const router = Router();
+import  getCiudades from '../controllers/ciudadesController.js';
 
-router.get('/', controller.getCiudades);
+router.get('/', getCiudades);
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/generosController.js');
+import { Router } from 'express';
+const router = Router();
+import  getGeneros  from '../controllers/generosController.js';
 
-router.get('/', controller.getGeneros);
+router.get('/', getGeneros);
 
-module.exports = router;
+export default router;

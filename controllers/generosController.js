@@ -1,8 +1,10 @@
-const db = require('../config/db.js');
+import connection from '../config/db.js';
 
-exports.getGeneros = (req, res) => {
-    db.query('SELECT * FROM GENEROS', (err, results) => {
+
+const getGeneros = (req, res) => {
+    connection.query('SELECT * FROM GENEROS', (err, results) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json(results);
     });
 };
+export default getGeneros;

@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const controller = require('../controllers/lenguajesController.js');
+import { Router } from 'express';
+const router = Router();
+import  getLenguajes  from '../controllers/lenguajesController.js';
 
-router.get('/', controller.getLenguajes);
+router.get('/', getLenguajes);
 
-module.exports = router;
+export default router;
